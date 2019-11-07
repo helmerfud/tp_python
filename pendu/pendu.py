@@ -15,6 +15,7 @@ def main():
     correct = 'x000000000000x!!'
     temp_word = "111111111111111"
     nb_try = 0
+    entrered_letter = ''
     try:
         pscores = loadScore(fileScores)
         while correct.lower() != 'o':
@@ -24,7 +25,6 @@ def main():
             actual_player = str(actual_player)
             actual_player_score = getScore(actual_player, pscores)
 
-            print('actual_player_score: {}\n'.format(actual_player_score))
             if actual_player_score:
                 print ('Joueur, {}, trouvé. Votre score est de: {}'.format(actual_player, actual_player_score))
             else:
@@ -47,8 +47,12 @@ def main():
         while temp_word != selected_word and nb_try < max_try:
             letter = myInput("Entrer un lettre: ", '^[a-zA-Z]$')
             print('lettre {}'.format(letter))
+
+            if letter in entrered_letter:
+                print ("la lettre {} a déjà été utilisée\n".format(letter))
+                continue
+            entrered_letter += letter
             if letter in selected_word:
-                #print('trouve: {}.'.format(letter))
                 for key, val in enumerate(selected_word):
                     if val == letter:
                         temp_word = repl_char(temp_word, val, key)
@@ -62,6 +66,7 @@ def main():
 
         if (nb_try >= max_try and temp_word != selected_word):
             print("Nombre de tentatives épuisées\n")
+            print('Le mot était {}\n'.format(selected_word))
         else:
             print("Vous avez trouvé\n")
             print("Votre score est de {} points".format(max_try - nb_try))
