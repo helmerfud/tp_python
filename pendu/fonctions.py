@@ -4,9 +4,22 @@
 
 ## Import des librairies
 from os import path
-import pickle
+import pickle, re
 
 ## Declarations
+def myInput(prompt, regex):
+    data = raw_input (prompt)
+    if re.match(regex, str(data)):
+        return data
+    return ''
+
+def repl_char(string, char, id):
+    arr = []
+    for c in string:
+        arr.append(c)
+    arr[id] = char
+    return ''.join(arr)
+
 def createPlayer(player, scores):
     if player in scores.keys():
         print("player {} already exists\n". format(player))
